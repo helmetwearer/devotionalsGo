@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Devotional database</title>
+  
+  <style>
+    /* Styling for our table */
+    table.devotional {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    table.devotional td, th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    table.devotional tr:nth-child(even){
+      background-color: #f2f2f2;
+    }
+
+    table.devotional tr:hover {
+      background-color: #ddd;
+    }
+
+    table.devotional th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    /* Styling for our input form */
+    input[type=text] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type=submit] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+    div {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <h1>Devotional Database</h1>
+  <table class="devotional">
+    <tr>
+      <th>Source</th>
+      <th>Content</th>
+      <th>Date Posted</th>
+      <th>Author Name</th>
+    </tr>
+  </table>
+  <br/>
+
+  <div>
+    <form action="/devotional" method="post">
+      <h3>Add new Devotional</h3>
+      Source:
+      <input type="text" name="source">
+      <br/>Content:
+      <input type="text" name="content">
+      <br/> Author Name:
+      <input type="text" name="authorname">
+      <br/>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <script>
+    devotionalTable = document.querySelector("table")
+    fetch("/devotional")
+      .then(response => response.json()) // Read the JSON body of the response
+      .then(devotionalList => {
+        devotionalList.forEach(devotional => {
+          row = document.createElement("tr") 
+          source = document.createElement("td") 
+          source.innerHTML = devotional.Source
+          content = document.createElement("td")
+          content.innerHTML = devotional.Content
+          date_posted = document.createElement("td")
+          date_posted.innerHTML = devotional.DatePosted
+          author_name = document.createElement("td")
+          author_name.innerHTML = devotional.AuthorName
+          row.appendChild(source)
+          row.appendChild(content)
+          row.appendChild(date_posted)
+          row.appendChild(author_name)
+          devotionalTable.appendChild(row)
+        })
+      })
+  </script>
+</body>
+
+</html>

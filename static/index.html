@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Random Devotional</title>
+  
+</head>
+
+<body>
+  <h1>Random Devotional</h1>
+  <div id="block">
+  </div>
+  <script>
+    devotionalBlock = document.getElementById("block")
+    fetch("/devotional")
+      .then(response => response.json()) // Read the JSON body of the response
+      .then(devotionalList => {
+        
+          var randomItem = devotionalList[Math.floor(Math.random()*devotionalList.length)];
+
+        
+          source = document.createElement("p") 
+          source.innerHTML = randomItem.Source
+          content = document.createElement("p")
+          content.innerHTML = randomItem.Content
+          date_posted = document.createElement("p")
+          date_posted.innerHTML = randomItem.DatePosted
+          author_name = document.createElement("p")
+          author_name.innerHTML = "By: " + randomItem.AuthorName
+          // Add the data elements to the row
+          devotionalBlock.appendChild(source)
+          devotionalBlock.appendChild(author_name)
+          devotionalBlock.appendChild(content)
+          
+          devotionalBlock.appendChild(date_posted)
+          // Add the row element to the table
+          devotionalBlock.appendChild(row)
+      })
+  </script>
+</body>
+
+</html>
